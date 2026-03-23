@@ -1,0 +1,15 @@
+columnSuffix: null
+handle: productPrice
+instructions: null
+name: Price
+searchable: false
+settings:
+  currency: CHF
+  defaultValue: null
+  max: null
+  min: 0
+  showCurrency: true
+  size: null
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\Money

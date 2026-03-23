@@ -1,0 +1,16 @@
+currLabel: Products
+customIcon: null
+enabled: true
+handle: products
+icon: list
+layout: bb1b5a06-bbfb-4097-a6bf-5bdd232de146 # Default
+level: 1
+newWindow: false
+parent: null
+prevLabel: Products
+prevLevel: null
+prevParent: null
+prevUrl: /entries/product
+sortOrder: 1
+type: manual
+url: /admin/entries/products

@@ -1,0 +1,43 @@
+services:
+  client:
+    build: client
+    ports:
+      - 3000:3000
+    volumes:
+      - client/:/usr/src/app
+
+  craft:
+    build: craft
+    depends_on:
+      - postgres
+    env_file: &craft-env
+      - craft/.env
+    init: true
+    ports:
+      - 8080:8080
+    volumes:
+      - cpresources:/var/www/project/cms/web/cpresources:delegated
+      - storage:/var/www/project/cms/storage:delegated
+      - craft/:/app
+
+  postgres:
+    build: postgres
+<<<<<<< HEAD
+    env_file:
+      *env
+=======
+    env_file: *craft-env
+>>>>>>> 7edad8d (fixup! add mvp)
+    environment:
+      POSTGRES_PASSWORD: secret
+    init: true
+    ports:
+      - 5432:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - postgres/db-seed/:/docker-entrypoint-initdb.d
+
+volumes:
+  db-data:
+  cpresources:
+  storage:

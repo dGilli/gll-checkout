@@ -1,0 +1,77 @@
+allowLineBreaksInTitles: false
+color: null
+description: null
+fieldLayouts:
+  1a318e1f-8d6a-4af5-8f30-643498c95ca1:
+    cardThumbAlignment: end
+    cardView:
+      - 'layoutElement:de5d4ddd-fe6a-4be1-a0cd-c474fe40f940'
+      - 'layoutElement:a053a898-62dc-4b5d-a6e8-d0366e20fe4f'
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: '2026-03-21T20:02:21+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 83cca782-049f-4b0f-9465-db7fe00b8150 # Name
+            handle: null
+            instructions: null
+            label: null
+            required: true
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: fa0d1636-89fd-40e2-902b-ab0c36b43032
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2026-03-21T20:05:45+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 31a6421d-8710-4150-88a1-ee2278259dc2 # Price
+            handle: null
+            instructions: null
+            label: null
+            required: true
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: de5d4ddd-fe6a-4be1-a0cd-c474fe40f940
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2026-03-21T20:05:45+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: bbe76a48-6f88-4447-8c14-af2c09f43208 # Category
+            handle: null
+            instructions: null
+            label: null
+            required: true
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: a053a898-62dc-4b5d-a6e8-d0366e20fe4f
+            userCondition: null
+            warning: null
+            width: 100
+        name: Product
+        uid: c8982128-91d5-4f97-aa74-2fbf09f4fb4d
+        userCondition: null
+    thumbFieldKey: null
+handle: product
+hasTitleField: false
+icon: null
+name: Product
+showSlugField: true
+showStatusField: true
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site
+uiLabelFormat: '{productName}'
