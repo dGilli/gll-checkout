@@ -1,0 +1,66 @@
+dateModified: 1774124111
+elementSources:
+  craft\elements\Entry:
+    -
+      defaultSort:
+        - postDate
+        - desc
+      defaultViewMode: ''
+      disabled: true
+      key: '*'
+      page: Entries
+      tableAttributes:
+        - status
+        - section
+        - postDate
+        - expiryDate
+        - link
+      type: native
+    -
+      defaultSort:
+        - postDate
+        - desc
+      defaultViewMode: table
+      disabled: false
+      key: 'section:65c1009d-4243-4427-80ee-1b6f2fc9d320' # Products
+      page: Entries
+      tableAttributes:
+        - status
+        - 'field:31a6421d-8710-4150-88a1-ee2278259dc2' # Price
+        - 'field:bbe76a48-6f88-4447-8c14-af2c09f43208' # Category
+        - postDate
+        - expiryDate
+      type: native
+email:
+  fromEmail: dennis@gilli.ch
+  fromName: 'GLL Checkout'
+  transportType: craft\mail\transportadapters\Sendmail
+meta:
+  __names__:
+    6eb7dabc-8d66-4478-adb6-c1fcba195992: Products # Products
+    31a6421d-8710-4150-88a1-ee2278259dc2: Price # Price
+    65c1009d-4243-4427-80ee-1b6f2fc9d320: Products # Products
+    83cca782-049f-4b0f-9465-db7fe00b8150: Name # Name
+    0893fc65-a5cf-413f-a265-16b08f349398: 'GLL Checkout' # GLL Checkout
+    1904a08b-9633-4dce-b89b-bf5a50f6879b: 'GLL Checkout' # GLL Checkout
+    4414c5f8-b178-48db-b330-ba987db63070: Product # Product
+    bb1b5a06-bbfb-4097-a6bf-5bdd232de146: Default # Default
+    bbe76a48-6f88-4447-8c14-af2c09f43208: Category # Category
+plugins:
+  cp-nav:
+    edition: standard
+    enabled: true
+    schemaVersion: 2.0.11
+system:
+  edition: solo
+  live: true
+  name: 'GLL Checkout'
+  schemaVersion: 5.9.0.8
+  timeZone: America/Los_Angeles
+users:
+  allowPublicRegistration: false
+  defaultGroup: null
+  photoSubpath: null
+  photoVolumeUid: null
+  require2fa: false
+  requireEmailVerification: true

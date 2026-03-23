@@ -1,0 +1,30 @@
+app = "gll-checkout-craft"
+primary_region = "fra"
+
+[build]
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[[vm]]
+  memory = "256mb"
+  cpus = 1
+
+[env]
+#  CRAFT_ENVIRONMENT= "dev"
+#  CRAFT_APP_ID = "CraftCMS--653164fa-e685-4414-b2c8-ecf6de712fcf"
+#  CRAFT_DB_DRIVER = "pgsql"
+#  CRAFT_DB_SERVER = "gll-checkout-postgres.flycast"
+#  CRAFT_DB_DATABASE = "postgres"
+#  CRAFT_DB_USER = "postgres"
+#
+  CRAFT_ENVIRONMENT = "production"
+  CRAFT_DEV_MODE = false
+  CRAFT_ALLOW_ADMIN_CHANGES = false
+  CRAFT_DB_SERVER = "gll-checkout-postgres.flycast"
+

@@ -1,0 +1,16 @@
+defaultPlacement: end
+enableVersioning: true
+entryTypes:
+  -
+    uid: 4414c5f8-b178-48db-b330-ba987db63070 # Product
+handle: products
+maxAuthors: 1
+name: Products
+propagationMethod: all
+siteSettings:
+  0893fc65-a5cf-413f-a265-16b08f349398: # GLL Checkout
+    enabledByDefault: true
+    hasUrls: false
+    template: null
+    uriFormat: null
+type: channel

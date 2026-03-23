@@ -1,0 +1,16 @@
+currLabel: Schemas
+customIcon: null
+enabled: true
+handle: schemas
+icon: null
+layout: bb1b5a06-bbfb-4097-a6bf-5bdd232de146 # Default
+level: 2
+newWindow: false
+parent: ea8087b0-65ce-4aa8-9f16-7200af9afb3a
+prevLabel: Schemas
+prevLevel: 2
+prevParent: ea8087b0-65ce-4aa8-9f16-7200af9afb3a
+prevUrl: graphql/schemas
+sortOrder: 5
+type: craft
+url: graphql/schemas

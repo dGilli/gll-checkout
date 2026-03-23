@@ -1,0 +1,9 @@
+baseUrl: $PRIMARY_SITE_URL
+enabled: true
+handle: default
+hasUrls: true
+language: en
+name: 'GLL Checkout'
+primary: true
+siteGroup: 1904a08b-9633-4dce-b89b-bf5a50f6879b # GLL Checkout
+sortOrder: 1
