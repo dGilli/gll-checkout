@@ -37,7 +37,15 @@ no-dirty:
 # DEVELOPMENT
 # ==================================================================================== #
 
-# ...
+## tidy: lint and format all files
+.PHONY: tidy
+tidy:
+	prettier * --check --cache --ignore-unknown
+
+## dev: run the application
+.PHONY: dev
+dev:
+	docker compose up
 
 # ==================================================================================== #
 # OPERATIONS

@@ -31,4 +31,6 @@ return GeneralConfig::create()
     ->headlessMode(true)
     // Users should be redirected to entries after logging into the control panel.
     ->postCpLoginRedirect('entries')
+    // Serve control panel from the web root on dedicated hostname.
+    ->cpTrigger(null)
 ;

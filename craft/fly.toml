@@ -12,19 +12,12 @@ primary_region = "fra"
   processes = ["app"]
 
 [[vm]]
-  memory = "256mb"
+  memory = "512mb"
   cpus = 1
 
 [env]
-#  CRAFT_ENVIRONMENT= "dev"
-#  CRAFT_APP_ID = "CraftCMS--653164fa-e685-4414-b2c8-ecf6de712fcf"
-#  CRAFT_DB_DRIVER = "pgsql"
-#  CRAFT_DB_SERVER = "gll-checkout-postgres.flycast"
-#  CRAFT_DB_DATABASE = "postgres"
-#  CRAFT_DB_USER = "postgres"
-#
   CRAFT_ENVIRONMENT = "production"
   CRAFT_DEV_MODE = false
   CRAFT_ALLOW_ADMIN_CHANGES = false
   CRAFT_DB_SERVER = "gll-checkout-postgres.flycast"
-
+  PHP_OPCACHE_VALIDATE_TIMESTAMPS = 1
