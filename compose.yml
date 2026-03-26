@@ -1,10 +1,12 @@
 services:
   client:
-    build: client
+    build:
+      context: client
+      target: dev
     ports:
       - 3000:3000
     volumes:
-      - client/:/usr/src/app
+      - ./client/:/usr/src/app
 
   craft:
     build: craft
@@ -12,18 +14,19 @@ services:
       - postgres
     env_file: &env
       - craft/.env
+    environment:
+      PHP_OPCACHE_VALIDATE_TIMESTAMPS: 1
     init: true
     ports:
       - 8080:8080
     volumes:
       - cpresources:/var/www/project/cms/web/cpresources:delegated
       - storage:/var/www/project/cms/storage:delegated
-      - craft/:/app
+      - ./craft/:/app
 
   postgres:
     build: postgres
-    env_file:
-      *env
+    env_file: *env
     environment:
       POSTGRES_PASSWORD: secret
     init: true
@@ -31,7 +34,7 @@ services:
       - 5432:5432
     volumes:
       - db-data:/var/lib/postgresql/data
-      - postgres/db-seed/:/docker-entrypoint-initdb.d
+      - ./postgres/db-seed/:/docker-entrypoint-initdb.d
 
 volumes:
   db-data:

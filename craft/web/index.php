@@ -6,6 +6,9 @@
 // Load shared bootstrap
 require dirname(__DIR__) . '/bootstrap.php';
 
+// Serve control panel from the web root (see config/general.php)
+define('CRAFT_CP', true);
+
 // Load and run Craft
 /** @var craft\web\Application $app */
 $app = require CRAFT_VENDOR_PATH . '/craftcms/cms/bootstrap/web.php';
