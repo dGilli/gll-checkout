@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Search } from 'lucide-react';
 import ProductList from './components/ProductList';
 import CategoryFilter from './components/CategoryFilter';
@@ -8,13 +8,16 @@ import CheckoutModal from './components/CheckoutModal'
 import CashModal from './components/CashModal'
 import TwintModal from './components/TwintModal'
 import { Product, SelectedProduct } from './types';
-import { sampleProducts } from './data/products';
+import { loadProducts, setupAutoRefresh } from './data/products';
 import { logger } from './logger'
 import { mailer } from './mailer'
+
 export function App() {
-    const [products] = useState<Product[]>(sampleProducts);
+    const [products, setProducts] = useState<Product[]>([]);
+    const [isLoadingProducts, setIsLoadingProducts] = useState(true);
+    const [productsError, setProductsError] = useState<string | null>(null);
     const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>([]);
-    const [activeCategory, setActiveCategory] = useState<string>('alle');
+    const [activeCategory, setActiveCategory] = useState<string>('Alle');
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false)
     const [isCashModalOpen, setIsCashModalOpen] = useState(false)
@@ -24,19 +27,69 @@ export function App() {
     )
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string|null>(null);
+
+    // Load products on mount and set up auto-refresh
+    useEffect(() => {
+        let cleanupAutoRefresh: (() => void) | null = null;
+
+        const loadInitialProducts = async () => {
+            setIsLoadingProducts(true);
+            setProductsError(null);
+            try {
+                const loadedProducts = await loadProducts();
+                setProducts(loadedProducts);
+                if (loadedProducts.length === 0) {
+                    setProductsError('Keine Produkte verfügbar. Bitte Internetverbindung prüfen.');
+                }
+            } catch (err) {
+                setProductsError('Fehler beim Laden der Produkte.');
+                console.error('Failed to load products:', err);
+            } finally {
+                setIsLoadingProducts(false);
+            }
+        };
+
+        loadInitialProducts();
+
+        // Set up auto-refresh (only in production)
+        cleanupAutoRefresh = setupAutoRefresh((updatedProducts) => {
+            setProducts(updatedProducts);
+        });
+
+        // Cleanup function
+        return () => {
+            if (cleanupAutoRefresh) {
+                cleanupAutoRefresh();
+            }
+        };
+    }, []);
+
     // Get unique categories from products
     const categories = useMemo(() => {
-        const categoriesSet = new Set(products.map(product => product.category));
-        return ['alle', ...Array.from(categoriesSet)];
+        const unique = new Set();
+
+        for (const p of products) {
+            for (const c of p.categories || []) unique.add(c);
+        }
+
+        return ["Alle", ...[...unique].sort()];
     }, [products]);
+
     // Filter products based on category and search term
     const filteredProducts = useMemo(() => {
-        return products.filter(product => {
-            const matchesCategory = activeCategory === 'alle' || product.category === activeCategory;
-            const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
+        return products.filter((product) => {
+            const matchesCategory =
+                activeCategory === "Alle" ||
+                product.categories.includes(activeCategory);
+
+            const matchesSearch = product.name
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase());
+
             return matchesCategory && matchesSearch;
         });
     }, [products, activeCategory, searchTerm]);
+
     // Add product to selected products
     const handleAddProduct = (product: Product) => {
         setSelectedProducts(prev => {
@@ -71,11 +124,11 @@ export function App() {
     };
     const clearSelectedProducts = () => {
         setSelectedProducts([]);
-        setActiveCategory("alle");
+        setActiveCategory("Alle");
     };
     const handleOpenCheckoutModal = () => {
         setIsCheckoutModalOpen(true)
-        setActiveCategory("alle");
+        setActiveCategory("Alle");
     }
     const handleCloseCheckoutModal = () => {
         setIsCheckoutModalOpen(false)
@@ -183,9 +236,30 @@ euer Good Life Lounge Team
                     {/* Category filter */}
                     <CategoryFilter categories={categories} activeCategory={activeCategory} onSelectCategory={setActiveCategory} />
                 </div>
-                <div className="relative bottom-[60px] h-[calc(100%-60px)] sm:mt-[76px] overflow-y-scroll"> {/* todo Ew fix it */}
+                <div className="relative bottom-[60px] h-[calc(100%-60px)] sm:mt-[76px] overflow-y-scroll">
+                    {/* Loading state */}
+                    {isLoadingProducts && (
+                        <div className="flex items-center justify-center h-full">
+                            <div className="text-center">
+                                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                                <p className="text-gray-600">Produkte werden geladen...</p>
+                            </div>
+                        </div>
+                    )}
+                    {/* Error state */}
+                    {productsError && !isLoadingProducts && (
+                        <div className="flex items-center justify-center h-full">
+                            <div className="text-center p-4">
+                                <div className="text-red-500 text-4xl mb-4">⚠️</div>
+                                <p className="text-red-600 font-semibold mb-2">{productsError}</p>
+                                <p className="text-gray-500 text-sm">Die App funktioniert offline, falls bereits Produkte zwischengespeichert wurden.</p>
+                            </div>
+                        </div>
+                    )}
                     {/* Product list */}
-                    <ProductList products={filteredProducts} onAddProduct={handleAddProduct} />
+                    {!isLoadingProducts && !productsError && (
+                        <ProductList products={filteredProducts} onAddProduct={handleAddProduct} />
+                    )}
                 </div>
             </div>
             {/* Right side - Selected products and total */}
