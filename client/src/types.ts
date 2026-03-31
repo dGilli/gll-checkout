@@ -1,16 +1,15 @@
 export interface Product {
-    id: number
-    name: string
-    price: number
-    categories: string
+  id: number;
+  name: string;
+  price: number;
+  categories: string;
 }
 export interface SelectedProduct extends Product {
-    quantity: number
+  quantity: number;
 }
 export interface ReceiptMessage {
-    from: string;
-    to:  string[];
-    subject: string;
-    text: string;
+  from: string;
+  to: string[];
+  subject: string;
+  text: string;
 }
-

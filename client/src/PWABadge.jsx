@@ -1,54 +1,61 @@
-import './PWABadge.css'
+import "./PWABadge.css";
 
-import { useRegisterSW } from 'virtual:pwa-register/react'
+import { useRegisterSW } from "virtual:pwa-register/react";
 
 function PWABadge() {
-    // check for updates every hour
-    const period = 60 * 60 * 1000
+  // check for updates every hour
+  const period = 60 * 60 * 1000;
 
-    const {
-        needRefresh: [needRefresh, setNeedRefresh],
-        updateServiceWorker,
-    } = useRegisterSW({
-        onRegisteredSW(swUrl, r) {
-            if (period <= 0) return
-            if (r?.active?.state === 'activated') {
-                registerPeriodicSync(period, swUrl, r)
-            }
-            else if (r?.installing) {
-                r.installing.addEventListener('statechange', (e) => {
-                    /** @type {ServiceWorker} */
-                    const sw = e.target
-                    if (sw.state === 'activated')
-                        registerPeriodicSync(period, swUrl, r)
-                })
-            }
-        },
-    })
+  const {
+    needRefresh: [needRefresh, setNeedRefresh],
+    updateServiceWorker,
+  } = useRegisterSW({
+    onRegisteredSW(swUrl, r) {
+      if (period <= 0) return;
+      if (r?.active?.state === "activated") {
+        registerPeriodicSync(period, swUrl, r);
+      } else if (r?.installing) {
+        r.installing.addEventListener("statechange", (e) => {
+          /** @type {ServiceWorker} */
+          const sw = e.target;
+          if (sw.state === "activated") registerPeriodicSync(period, swUrl, r);
+        });
+      }
+    },
+  });
 
-    function close() {
-        setNeedRefresh(false)
-    }
+  function close() {
+    setNeedRefresh(false);
+  }
 
-    return (
-        <div className="PWABadge" role="alert" aria-labelledby="toast-message">
-            { (needRefresh)
-                && (
-                    <div className="PWABadge-toast">
-                        <div className="PWABadge-message">
-                            <span id="toast-message">Neue Inhalte verfügbar, klicken Sie auf die Schaltfläche „Neu laden“, um die App zu aktualisieren.</span>
-                        </div>
-                        <div className="PWABadge-buttons">
-                            <button className="PWABadge-toast-button" onClick={() => updateServiceWorker(true)}>Neu laden</button>
-                            <button className="PWABadge-toast-button" onClick={() => close()}>Abbrechen</button>
-                        </div>
-                    </div>
-                )}
+  return (
+    <div className="PWABadge" role="alert" aria-labelledby="toast-message">
+      {needRefresh && (
+        <div className="PWABadge-toast">
+          <div className="PWABadge-message">
+            <span id="toast-message">
+              Neue Inhalte verfügbar, klicken Sie auf die Schaltfläche „Neu
+              laden“, um die App zu aktualisieren.
+            </span>
+          </div>
+          <div className="PWABadge-buttons">
+            <button
+              className="PWABadge-toast-button"
+              onClick={() => updateServiceWorker(true)}
+            >
+              Neu laden
+            </button>
+            <button className="PWABadge-toast-button" onClick={() => close()}>
+              Abbrechen
+            </button>
+          </div>
         </div>
-    )
+      )}
+    </div>
+  );
 }
 
-export default PWABadge
+export default PWABadge;
 
 /**
  * This function will register a periodic sync check every hour, you can modify the interval as needed.
@@ -57,21 +64,19 @@ export default PWABadge
  * @param r {ServiceWorkerRegistration}
  */
 function registerPeriodicSync(period, swUrl, r) {
-    if (period <= 0) return
+  if (period <= 0) return;
 
-    setInterval(async () => {
-        if ('onLine' in navigator && !navigator.onLine)
-            return
+  setInterval(async () => {
+    if ("onLine" in navigator && !navigator.onLine) return;
 
-        const resp = await fetch(swUrl, {
-            cache: 'no-store',
-            headers: {
-                'cache': 'no-store',
-                'cache-control': 'no-cache',
-            },
-        })
+    const resp = await fetch(swUrl, {
+      cache: "no-store",
+      headers: {
+        cache: "no-store",
+        "cache-control": "no-cache",
+      },
+    });
 
-        if (resp?.status === 200)
-            await r.update()
-    }, period)
+    if (resp?.status === 200) await r.update();
+  }, period);
 }
