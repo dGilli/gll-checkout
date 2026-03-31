@@ -1,6 +1,6 @@
 import { Product } from "../types";
 
-const PRODUCTS_ENDPOINT = import.meta.env.PRODUCTS_ENDPOINT ?? "/products.json";
+const PRODUCTS_ENDPOINT = import.meta.env.PRODUCTS_ENDPOINT;
 const LOCALSTORAGE_KEY = "cached_products";
 const LAST_UPDATED_KEY = "products_last_updated";
 const REFRESH_INTERVAL = 5 * 60 * 1000; // 5 minutes in milliseconds
