@@ -33,12 +33,13 @@
     "postcss": "latest",
     "tailwindcss": "3.4.17",
     "vite": "^6.0.11",
-    "vite-plugin-pwa": "^0.21.1",
+    "vite-plugin-pwa": "^0.21.0",
     "workbox-core": "^7.3.0",
     "workbox-window": "^7.3.0"
   },
   "overrides": {
     "sharp": "0.32.6",
-    "sharp-ico": "0.1.5"
+    "sharp-ico": "0.1.5",
+    "serialize-javascript": "^6.0.2"
   }
 }
